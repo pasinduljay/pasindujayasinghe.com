@@ -1,0 +1,44 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - NODE_ENV
+      - DATABASE_URL
+      - ADMIN_USERNAME
+      - ADMIN_PASSWORD
+      - NEXTAUTH_SECRET
+      - NEXTAUTH_URL
+    depends_on:
+      - db
+    networks:
+      - dokploy-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portfolio.rule=Host(`pasindujayasinghe.com`)"
+      - "traefik.http.routers.portfolio.entrypoints=websecure"
+      - "traefik.http.routers.portfolio.tls=true"
+      - "traefik.http.services.portfolio.loadbalancer.server.port=3000"
+
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data
+    networks:
+      - dokploy-network
+
+volumes:
+  postgres_data_prod:
+
+
+networks:
+  dokploy-network:
+    name: dokploy-network
+    external: true

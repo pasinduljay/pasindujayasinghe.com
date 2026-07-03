@@ -1,0 +1,101 @@
+{
+  "profile": {
+    "name": "Pasindu Lakshitha Jayasinghe",
+    "role": "System & Cloud Architect",
+    "bio": "System, Cloud & Network Architect with 2 years of enterprise experience securing Canadian infrastructure. Specializing in Hybrid Cloud, Regulatory Compliance, and High-Performance Virtualization.",
+    "location": "Sri Lanka",
+    "email": "contact@pasindujayasinghe.com",
+    "github": "https://github.com/pasinduljay",
+    "linkedin": "https://www.linkedin.com/in/pasinduljay",
+    "bookCallUrl": "https://cal.com/pasinduljay/30min",
+    "whatsappUrl": "https://wa.me/+94770576274",
+    "resumeUrl": "https://pub-a27f90ce112e4c1b9a82e0f702623715.r2.dev/CV/Pasindu-Jayasinghe-20260101.pdf",
+    "image": "/uploads/profile.jpg",
+    "twitterUrl": "https://x.com/pasinduljay",
+    "redditUrl": "https://reddit.com/user/pasinduljay/",
+    "facebookUrl": "https://www.facebook.com/pasinduljay"
+  },
+  "siteIdentity": {
+    "siteName": "Pasindu Jayasinghe",
+    "siteRole": "System & Cloud Architect"
+  },
+  "skills": [
+    {
+      "id": "1",
+      "name": "Docker",
+      "category": "DevOps",
+      "level": 90
+    },
+    {
+      "id": "2",
+      "name": "Nginx",
+      "category": "Web Server",
+      "level": 85
+    },
+    {
+      "id": "3",
+      "name": "Python",
+      "category": "Language",
+      "level": 80
+    },
+    {
+      "id": "4",
+      "name": "Flask",
+      "category": "Framework",
+      "level": 75
+    },
+    {
+      "id": "5",
+      "name": "Linux",
+      "category": "OS",
+      "level": 85
+    },
+    {
+      "id": "6",
+      "name": "Terraform",
+      "category": "IaC",
+      "level": 70
+    }
+  ],
+  "projects": [
+    {
+      "id": "1",
+      "title": "SharePoint Video Downloader",
+      "description": "A self-hosted solution to download videos from SharePoint using Flask, Docker, and Nginx. Optimized for speed and ease of use.",
+      "techStack": [
+        "Python",
+        "Flask",
+        "Docker",
+        "Nginx"
+      ],
+      "link": "https://github.com/pasinduljay/Sharepoint-Video-Downloader"
+    },
+    {
+      "id": "2",
+      "title": "Documentations-Public",
+      "description": "Comprehensive technical guides and documentation for DevOps practices, system administration, and cloud infrastructure.",
+      "techStack": [
+        "Markdown",
+        "Git",
+        "Knowledge Base"
+      ],
+      "link": "https://github.com/pasinduljay/Documentations-Public"
+    }
+  ],
+  "timeline": [
+    {
+      "id": "1",
+      "year": "2023 - Present",
+      "title": "System & Cloud Architect",
+      "company": "Canadian Enterprise Infrastructure",
+      "description": "Managing Hybrid Cloud, Network Security, and Virtualization for Canadian regulatory compliance boundaries."
+    },
+    {
+      "id": "2",
+      "year": "2023",
+      "title": "B.Sc. Computer Science (Graduated)",
+      "company": "University of Jaffna",
+      "description": "Specialized in Cloud Computing and Network Security."
+    }
+  ]
+}
