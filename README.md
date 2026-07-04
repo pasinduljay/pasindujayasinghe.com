@@ -28,11 +28,27 @@ A security-focused interface module showing credentials verification, secure han
 
 ---
 
-## 🛡️ DevSecOps & Deployment Pipelines
+## 🛡️ Enterprise Security & DevSecOps Architecture
 
+This platform is engineered following strict global security standards (CIS Benchmarks, NIST guidelines) to ensure a highly robust, enterprise-grade security posture.
+
+### Network & Infrastructure Security
+* **Zero Trust Network Access**: The on-premises Kubernetes cluster has no inbound open router ports. 
+* **Cloudflare Tunnels**: All external ingress is strictly routed through Cloudflare Zero Trust Tunnels, absorbing malicious traffic, masking the origin IP, and providing enterprise DDoS protection.
+* **Internal Isolation**: The PostgreSQL database runs as an internal `ClusterIP` service, completely isolated from public exposure.
+
+### Container Hardening
+* **Minimal Base OS**: Utilizes `alpine` Linux to drastically reduce the container's attack surface.
+* **Non-Root Execution**: The application runs under a strictly unprivileged user (`uid 1001`), ensuring that even in the event of an application breach, attackers cannot execute host-level privilege escalation.
+* **Multi-stage Builds**: Prevents sensitive build-time tooling and dependencies from being shipped to production.
+
+### DevSecOps Pipelines
 * **Continuous Integration (CI)**: Automates standard formatting, Next.js build compilation validation, and **Trivy filesystem scanning** to identify and block vulnerable NPM dependencies.
-* **Continuous Delivery (CD)**: Automatically triggers upon code merges to build production containers, run **Trivy container image scans** for operating system packages vulnerabilities, and publish verified secure images to GitHub Container Registry (GHCR).
-* **GitOps Delivery**: Managed via Kubernetes manifests to enable declarative application state reconciliation.
+* **Continuous Release**: Automatically triggers upon code merges to build production containers, run **Trivy container image scans** for operating system packages vulnerabilities, and publish verified secure images to GitHub Container Registry (GHCR).
+
+### GitOps & Secrets Management
+* **Declarative State Reconciliation**: Automated deployment and state management via **ArgoCD**.
+* **Military-grade Cryptography**: Implements **Bitnami Sealed Secrets** to encrypt sensitive Kubernetes manifests (like database credentials) before committing to GitHub, ensuring 100% of the infrastructure is managed securely via Git without exposing plaintext secrets.
 
 ---
 
