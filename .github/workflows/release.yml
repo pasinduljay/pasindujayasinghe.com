@@ -1,4 +1,4 @@
-name: CD - Portfolio Deploy
+name: Release - Publish to GHCR
 
 on:
   push:
@@ -15,7 +15,7 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
-  cd-deploy:
+  publish-image:
     runs-on: ubuntu-latest
 
     steps:
