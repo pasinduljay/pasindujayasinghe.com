@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: portfolio-app
+  name: pasindujayasinghe.com-app
   namespace: default
   labels:
-    app: portfolio-app
+    app: pasindujayasinghe.com-app
 spec:
   replicas: 2
   strategy:
@@ -14,15 +14,15 @@ spec:
       maxUnavailable: 0
   selector:
     matchLabels:
-      app: portfolio-app
+      app: pasindujayasinghe.com-app
   template:
     metadata:
       labels:
-        app: portfolio-app
+        app: pasindujayasinghe.com-app
     spec:
       containers:
         - name: portfolio
-          image: ghcr.io/pasinduljay/portfolio:latest
+          image: ghcr.io/pasinduljay/pasindujayasinghe.com:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
@@ -64,7 +64,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: portfolio-app
+  name: pasindujayasinghe.com-app
   namespace: default
 spec:
   type: ClusterIP
@@ -73,4 +73,4 @@ spec:
       targetPort: 3000
       protocol: TCP
   selector:
-    app: portfolio-app
+    app: pasindujayasinghe.com-app
