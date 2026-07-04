@@ -81,6 +81,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 # Install runtime dependencies locally (owned by root initially)
+# We update npm first to patch the CVE inside the node:24-alpine bundled npm
+RUN npm install -g npm@latest
+
 # We install in a separate directory to avoid conflicts with Next.js standalone node_modules
 RUN mkdir -p /app/admin-tools
 WORKDIR /app/admin-tools

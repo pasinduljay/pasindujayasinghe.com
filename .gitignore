@@ -48,5 +48,4 @@ data/secrets.json
 .vscode
 
 # Kubernetes Secrets
-kubernetes/*-secret.yaml
 kubernetes/db-secret.yaml
