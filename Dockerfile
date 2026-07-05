@@ -103,4 +103,4 @@ EXPOSE 3000
 ENV PORT 3000
 
 # Start via script
-CMD ["./start.sh"]
+ENTRYPOINT ["/bin/sh", "./start.sh"]
