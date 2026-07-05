@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTheme } from "next-themes";
 
 const loadingPhrases = [
     { pct: 0, text: "Initializing secure terminal session..." },
@@ -15,8 +14,6 @@ const loadingPhrases = [
 ];
 
 export default function Preloader({ isBlocked = false, blockReason = "" }: { isBlocked?: boolean; blockReason?: string }) {
-    const { resolvedTheme } = useTheme();
-    const [mounted, setMounted] = useState(false);
     const [complete, setComplete] = useState(false);
     const [progress, setProgress] = useState(0);
     const [ipAddress, setIpAddress] = useState("SCANNING...");
@@ -159,10 +156,6 @@ export default function Preloader({ isBlocked = false, blockReason = "" }: { isB
     if (isBlocked && progress >= 99) {
         currentPhrase = `Verification failed. Access restricted. Reason: ${blockReason || "Flagged IP address"}`;
     }
-
-    // Spinner characters for the retro terminal load
-    const spinnerChars = ["/", "-", "\\", "|"];
-    const currentSpinner = spinnerChars[Math.floor(progress / 3) % spinnerChars.length];
 
     const preloaderStyles = `
         .preloader-bg {

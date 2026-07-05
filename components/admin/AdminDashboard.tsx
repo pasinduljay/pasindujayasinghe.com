@@ -304,7 +304,7 @@ function SettingsTab() {
             } else {
                 toast.error("Failed to block IP");
             }
-        } catch (err) {
+        } catch {
             toast.error("Network error");
         } finally {
             setSecurityLoading(false);
@@ -328,7 +328,7 @@ function SettingsTab() {
             } else {
                 toast.error("Failed to unblock IP");
             }
-        } catch (err) {
+        } catch {
             toast.error("Network error");
         }
     };
