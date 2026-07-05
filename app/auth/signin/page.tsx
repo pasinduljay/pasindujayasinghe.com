@@ -8,14 +8,14 @@ import Container from "@/components/ui/Container";
 export default function SignIn() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState(false);
+    const [errorMsg, setErrorMsg] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
-        setError(false);
+        setErrorMsg(null);
 
         const res = await signIn("credentials", {
             username,
@@ -24,7 +24,13 @@ export default function SignIn() {
         });
 
         if (res?.error) {
-            setError(true);
+            let msg = "INVALID CREDENTIALS";
+            if (res.error.includes("IP_LOCKED_OUT")) {
+                msg = res.error.replace("IP_LOCKED_OUT:", "").trim();
+                // Strip next-auth wrapper text if present
+                if (msg.startsWith("Error: ")) msg = msg.substring(7);
+            }
+            setErrorMsg(msg.toUpperCase());
             setLoading(false);
         } else {
             router.push("/admin");
@@ -70,10 +76,10 @@ export default function SignIn() {
                             />
                         </div>
 
-                        {error && (
+                        {errorMsg && (
                             <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-500 text-xs font-bold text-center flex items-center justify-center gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="12" x2="12" y1="8" y2="12" /><line x1="12" x2="12.01" y1="16" y2="16" /></svg>
-                                INVALID CREDENTIALS
+                                {errorMsg}
                             </div>
                         )}
 

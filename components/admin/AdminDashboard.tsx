@@ -248,6 +248,91 @@ function SettingsTab() {
     const [loading, setLoading] = useState(false);
     const { isOnline, toggleOnline, isVaultOnline, toggleVaultOnline } = useSystemStatus();
 
+    // Security Dashboard State
+    const [blockedIps, setBlockedIps] = useState<any[]>([]);
+    const [loginAttempts, setLoginAttempts] = useState<any[]>([]);
+    const [manualIp, setManualIp] = useState("");
+    const [manualReason, setManualReason] = useState("");
+    const [manualDuration, setManualDuration] = useState("24");
+    const [securityLoading, setSecurityLoading] = useState(false);
+
+    const fetchSecurityData = React.useCallback(async () => {
+        try {
+            const blockedRes = await fetch("/api/security/blocked-ips");
+            if (blockedRes.ok) {
+                const json = await blockedRes.json();
+                if (json.success) setBlockedIps(json.data);
+            }
+            const attemptsRes = await fetch("/api/security/login-attempts");
+            if (attemptsRes.ok) {
+                const json = await attemptsRes.json();
+                if (json.success) setLoginAttempts(json.data);
+            }
+        } catch (err) {
+            console.error("Failed to load security logs", err);
+        }
+    }, []);
+
+    React.useEffect(() => {
+        fetchSecurityData();
+    }, [fetchSecurityData]);
+
+    const handleBlockIp = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!manualIp || !manualReason) return;
+        setSecurityLoading(true);
+
+        try {
+            const res = await fetch("/api/security/blocked-ips", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    ip: manualIp,
+                    reason: manualReason,
+                    durationHours: Number(manualDuration)
+                })
+            });
+
+            if (res.ok) {
+                const json = await res.json();
+                if (json.success) {
+                    toast.success("IP Blocked", { description: `Successfully blocked IP ${manualIp}` });
+                    setManualIp("");
+                    setManualReason("");
+                    fetchSecurityData();
+                }
+            } else {
+                toast.error("Failed to block IP");
+            }
+        } catch {
+            toast.error("Network error");
+        } finally {
+            setSecurityLoading(false);
+        }
+    };
+
+    const handleUnblockIp = async (ip: string) => {
+        try {
+            const res = await fetch("/api/security/blocked-ips", {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ ip })
+            });
+
+            if (res.ok) {
+                const json = await res.json();
+                if (json.success) {
+                    toast.success("IP Unblocked", { description: `Unblocked IP ${ip}` });
+                    fetchSecurityData();
+                }
+            } else {
+                toast.error("Failed to unblock IP");
+            }
+        } catch {
+            toast.error("Network error");
+        }
+    };
+
     const handleUpdate = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
@@ -267,7 +352,7 @@ function SettingsTab() {
     };
 
     return (
-        <div className="space-y-6 animate-fade-in">
+        <div className="space-y-6 animate-fade-in text-white">
             <div className="flex items-center gap-2 mb-6">
                 <div className="w-1 h-8 bg-cyber-orange rounded-full"></div>
                 <h3 className="text-2xl font-black text-white tracking-tight">SECURITY_CONFIG</h3>
@@ -340,6 +425,114 @@ function SettingsTab() {
                     </button>
                 </div>
             </form>
+
+            {/* Active Security Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+                {/* Manual Block & Blocked Registry */}
+                <div className="bg-white/5 p-6 rounded-3xl border border-white/5 space-y-6">
+                    <div className="flex items-center gap-2 pb-3 border-b border-white/5">
+                        <div className="w-1.5 h-4 bg-red-500 rounded-full"></div>
+                        <h4 className="font-bold text-lg uppercase tracking-wider font-mono">Flagged IP Registry</h4>
+                    </div>
+
+                    <form onSubmit={handleBlockIp} className="space-y-3 p-4 bg-black/30 rounded-2xl border border-white/5">
+                        <h5 className="text-xs font-bold text-red-400 uppercase tracking-widest font-mono">Flag Malicious Vector</h5>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <input
+                                value={manualIp}
+                                onChange={e => setManualIp(e.target.value)}
+                                className="bg-black/50 border border-white/10 p-2.5 rounded-xl text-white outline-none focus:border-red-500 text-xs font-mono"
+                                placeholder="Target IP (e.g. 192.168.1.1)"
+                                required
+                            />
+                            <select
+                                value={manualDuration}
+                                onChange={e => setManualDuration(e.target.value)}
+                                className="bg-black/50 border border-white/10 p-2.5 rounded-xl text-white outline-none focus:border-red-500 text-xs font-mono"
+                            >
+                                <option value="1">1 Hour Lockout</option>
+                                <option value="24">24 Hour Lockout</option>
+                                <option value="168">7 Day Lockout</option>
+                                <option value="8760">1 Year Block</option>
+                            </select>
+                        </div>
+                        <input
+                            value={manualReason}
+                            onChange={e => setManualReason(e.target.value)}
+                            className="w-full bg-black/50 border border-white/10 p-2.5 rounded-xl text-white outline-none focus:border-red-500 text-xs font-mono"
+                            placeholder="Reason (e.g. Malicious scanning attempts)"
+                            required
+                        />
+                        <button
+                            type="submit"
+                            disabled={securityLoading}
+                            className="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all disabled:opacity-50"
+                        >
+                            {securityLoading ? "Enforcing Block..." : "Apply IP Lockout"}
+                        </button>
+                    </form>
+
+                    <div className="space-y-3 max-h-[220px] overflow-y-auto pr-1">
+                        {blockedIps.length === 0 ? (
+                            <p className="text-xs text-zinc-500 font-mono text-center py-4">No active IP lockouts registered.</p>
+                        ) : (
+                            blockedIps.map(record => (
+                                <div key={record.id} className="p-3 bg-red-950/20 border border-red-500/10 rounded-xl flex items-center justify-between text-xs font-mono">
+                                    <div className="min-w-0 flex-1 pr-2">
+                                        <div className="flex items-center gap-2">
+                                            <span className="font-bold text-red-400">{record.ip}</span>
+                                            <span className="text-[10px] text-zinc-500">({new Date(record.blockedAt).toLocaleDateString()})</span>
+                                        </div>
+                                        <p className="text-[10px] text-zinc-400 truncate mt-1">{record.reason}</p>
+                                    </div>
+                                    <button
+                                        onClick={() => handleUnblockIp(record.ip)}
+                                        className="px-2.5 py-1 bg-white/5 hover:bg-white/10 rounded-lg text-emerald-400 hover:text-emerald-300 transition-all font-bold text-[10px] uppercase tracking-widest shrink-0"
+                                    >
+                                        Unblock
+                                    </button>
+                                </div>
+                            ))
+                        )}
+                    </div>
+                </div>
+
+                {/* Authentication Intrusion Audit Logs */}
+                <div className="bg-white/5 p-6 rounded-3xl border border-white/5 space-y-4">
+                    <div className="flex items-center gap-2 pb-3 border-b border-white/5">
+                        <div className="w-1.5 h-4 bg-cyber-orange rounded-full"></div>
+                        <h4 className="font-bold text-lg uppercase tracking-wider font-mono">Intrusion Audit Logs</h4>
+                    </div>
+
+                    <div className="space-y-3 max-h-[360px] overflow-y-auto pr-1">
+                        {loginAttempts.length === 0 ? (
+                            <p className="text-xs text-zinc-500 font-mono text-center py-8">No authentication logs found.</p>
+                        ) : (
+                            loginAttempts.map(attempt => (
+                                <div key={attempt.id} className={`p-3 border rounded-xl flex justify-between items-center text-xs font-mono ${
+                                    attempt.success 
+                                        ? "bg-emerald-950/10 border-emerald-500/10" 
+                                        : "bg-amber-950/10 border-amber-500/10"
+                                }`}>
+                                    <div className="min-w-0 flex-1 pr-2">
+                                        <div className="flex items-center gap-2">
+                                            <span className={`font-bold ${attempt.success ? "text-emerald-400" : "text-amber-500"}`}>
+                                                {attempt.success ? "SUCCESS" : "FAILED"}
+                                            </span>
+                                            <span className="text-[10px] text-zinc-500">
+                                                {new Date(attempt.timestamp).toLocaleTimeString()}
+                                            </span>
+                                        </div>
+                                        <p className="text-[10px] text-zinc-400 truncate mt-1">
+                                            IP: <span className="text-zinc-300 font-bold">{attempt.ip}</span> | User: <span className="text-zinc-300 font-bold">{attempt.username}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            ))
+                        )}
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

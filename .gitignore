@@ -41,6 +41,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+
 # User Data (Sensitive)
 data/secrets.json
 
@@ -49,3 +50,6 @@ data/secrets.json
 
 # Kubernetes Secrets
 kubernetes/db-secret.yaml
+
+# Prisma custom client
+/prisma/client/

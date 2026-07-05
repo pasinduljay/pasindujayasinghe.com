@@ -1,8 +1,26 @@
 import { getPortfolioData } from "@/lib/data";
 import AdminDashboard from "@/components/admin/AdminDashboard";
 import Container from "@/components/ui/Container";
+import { headers } from "next/headers";
+import { checkIpBlock } from "@/lib/security";
+import Preloader from "@/components/ui/Preloader";
+
+export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
+    const headerList = await headers();
+    const ip = headerList.get("x-forwarded-for")?.split(",")[0] || headerList.get("x-real-ip") || "127.0.0.1";
+
+    const blockCheck = await checkIpBlock(ip);
+
+    if (blockCheck.blocked) {
+        return (
+            <main className="min-h-screen bg-[#050508] text-white font-sans relative">
+                <Preloader isBlocked={true} blockReason={blockCheck.reason} />
+            </main>
+        );
+    }
+
     const data = await getPortfolioData();
 
     return (

@@ -76,13 +76,13 @@ export default function FeaturedSystemsLayout({ projects: _projects }: { project
                 <div className="grid grid-cols-1 md:grid-cols-6 gap-6 w-full">
                     
                     {/* Card 1: Multi-Cloud Deployments (Spans 3 cols on md) */}
-                    <div className="bg-card border border-border rounded-3xl p-8 hover:border-zinc-300 dark:hover:border-white/10 transition-all duration-300 flex flex-col justify-between min-h-[480px] md:col-span-3">
+                    <div className="bg-card border border-border rounded-3xl p-6 sm:p-8 hover:border-zinc-300 dark:hover:border-white/10 transition-all duration-300 flex flex-col justify-between min-h-[480px] md:col-span-3">
                         <div className="space-y-2 max-w-md">
-                            <div className="flex items-center gap-2">
+                            <div className="flex flex-col sm:flex-row sm:items-center items-start gap-1.5 sm:gap-2">
                                 <h3 className="text-xl font-bold text-zinc-900 dark:text-white font-sans">
                                     Multi-Cloud Deployments
                                 </h3>
-                                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-zinc-200/50 dark:bg-white/[0.04] text-zinc-500 dark:text-zinc-500 border border-border">
+                                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-zinc-200/50 dark:bg-white/[0.04] text-zinc-500 dark:text-zinc-500 border border-border whitespace-nowrap">
                                     hybrid infrastructure
                                 </span>
                             </div>
@@ -105,7 +105,7 @@ export default function FeaturedSystemsLayout({ projects: _projects }: { project
                                 }
                             `}</style>
                             
-                            <div className="relative w-[500px] h-[320px] shrink-0 scale-90 md:scale-100 origin-center">
+                            <div className="relative w-[500px] h-[320px] shrink-0 scale-[0.55] min-[375px]:scale-[0.65] min-[425px]:scale-[0.75] sm:scale-90 md:scale-100 origin-center">
                                 {/* SVG Connector Lines */}
                                 <svg className="absolute inset-0 w-full h-full text-zinc-200 dark:text-zinc-800" viewBox="0 0 500 320" fill="none">
                                     {/* Curved Paths Center to Outers */}
@@ -145,7 +145,7 @@ export default function FeaturedSystemsLayout({ projects: _projects }: { project
                                 </div>
 
                                 {/* Mid-Left: Self-hosted Runners */}
-                                <div className="absolute left-[0%] top-[43%]">
+                                <div className="absolute left-[4%] top-[43%]">
                                     <div className="flex items-center justify-center w-10 h-10 bg-background border border-border rounded-lg shadow-sm hover:border-[#10b981]/30 transition-colors" title="Private Runners">
                                         <Terminal className="w-5 h-5 text-zinc-500 dark:text-zinc-400" />
                                     </div>
@@ -168,7 +168,7 @@ export default function FeaturedSystemsLayout({ projects: _projects }: { project
                                 </div>
 
                                 {/* Mid-Right: Docker Registry */}
-                                <div className="absolute right-[0%] top-[43%]">
+                                <div className="absolute right-[4%] top-[43%]">
                                     <div className="flex items-center justify-center w-10 h-10 bg-background border border-border rounded-lg shadow-sm hover:border-[#10b981]/30 transition-colors" title="Docker Registry">
                                         <DockerLogo className="w-5 h-5 text-sky-500 dark:text-sky-400" />
                                     </div>
@@ -186,13 +186,13 @@ export default function FeaturedSystemsLayout({ projects: _projects }: { project
                     </div>
 
                     {/* Card 2: Secure Access Gateways (Spans 3 cols on md) */}
-                    <div className="bg-card border border-border rounded-3xl p-8 hover:border-zinc-300 dark:hover:border-white/10 transition-all duration-300 flex flex-col justify-between min-h-[480px] md:col-span-3">
+                    <div className="bg-card border border-border rounded-3xl p-6 sm:p-8 hover:border-zinc-300 dark:hover:border-white/10 transition-all duration-300 flex flex-col justify-between min-h-[480px] md:col-span-3">
                         <div className="space-y-2 max-w-md">
-                            <div className="flex items-center gap-2">
+                            <div className="flex flex-col sm:flex-row sm:items-center items-start gap-1.5 sm:gap-2">
                                 <h3 className="text-xl font-bold text-zinc-900 dark:text-white font-sans">
                                     Secure Access Gateways
                                 </h3>
-                                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-zinc-200/50 dark:bg-white/[0.04] text-zinc-500 dark:text-zinc-500 border border-border">
+                                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-zinc-200/50 dark:bg-white/[0.04] text-zinc-500 dark:text-zinc-500 border border-border whitespace-nowrap">
                                     zero trust policies
                                 </span>
                             </div>
@@ -203,7 +203,7 @@ export default function FeaturedSystemsLayout({ projects: _projects }: { project
 
                         {/* Stacked Windows Visualizer */}
                         <div className="relative w-full h-[320px] flex items-center justify-center overflow-hidden pt-6 select-none">
-                            <div className="relative w-[460px] h-[240px] shrink-0 scale-90 md:scale-100 origin-center">
+                            <div className="relative w-[460px] h-[240px] shrink-0 scale-[0.6] min-[375px]:scale-[0.7] min-[425px]:scale-[0.8] sm:scale-90 md:scale-100 origin-center">
                                 
                                 {/* 1. Back Window (wireguard) */}
                                 <div className="absolute left-[3%] top-[0%] w-[84%] h-[180px] bg-background/30 dark:bg-zinc-900/30 border border-border/40 rounded-2xl shadow transform -rotate-2 scale-95 opacity-55 flex flex-col overflow-hidden">
@@ -294,7 +294,7 @@ export default function FeaturedSystemsLayout({ projects: _projects }: { project
                     </div>
 
                     {/* Card 3: System Observability (Spans 2 cols on md) */}
-                    <div className="bg-card border border-border rounded-3xl p-8 hover:border-zinc-300 dark:hover:border-white/10 transition-all duration-300 flex flex-col justify-between min-h-[380px] md:col-span-2">
+                    <div className="bg-card border border-border rounded-3xl p-6 sm:p-8 hover:border-zinc-300 dark:hover:border-white/10 transition-all duration-300 flex flex-col justify-between min-h-[380px] md:col-span-2">
                         <div className="space-y-2">
                             <h3 className="text-xl font-bold text-zinc-900 dark:text-white font-sans">
                                 System Observability
@@ -340,7 +340,7 @@ export default function FeaturedSystemsLayout({ projects: _projects }: { project
                     </div>
 
                     {/* Card 4: DevOps Pipelines (Spans 2 cols on md) */}
-                    <div className="bg-card border border-border rounded-3xl p-8 hover:border-zinc-300 dark:hover:border-white/10 transition-all duration-300 flex flex-col justify-between min-h-[380px] md:col-span-2">
+                    <div className="bg-card border border-border rounded-3xl p-6 sm:p-8 hover:border-zinc-300 dark:hover:border-white/10 transition-all duration-300 flex flex-col justify-between min-h-[380px] md:col-span-2">
                         <div className="space-y-2">
                             <h3 className="text-xl font-bold text-zinc-900 dark:text-white font-sans">
                                 DevOps Pipelines
@@ -398,7 +398,7 @@ export default function FeaturedSystemsLayout({ projects: _projects }: { project
                     </div>
 
                     {/* Card 5: Infrastructure Telemetry (Spans 2 cols on md) */}
-                    <div className="bg-card border border-border rounded-3xl p-8 hover:border-zinc-300 dark:hover:border-white/10 transition-all duration-300 flex flex-col justify-between min-h-[380px] md:col-span-2">
+                    <div className="bg-card border border-border rounded-3xl p-6 sm:p-8 hover:border-zinc-300 dark:hover:border-white/10 transition-all duration-300 flex flex-col justify-between min-h-[380px] md:col-span-2">
                         <div className="space-y-2">
                             <h3 className="text-xl font-bold text-zinc-900 dark:text-white font-sans">
                                 Infrastructure Telemetry
