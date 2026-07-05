@@ -78,23 +78,24 @@ function DashboardPanel({ cpu, ram, uptime }: { cpu: number; ram: number; uptime
                 <InteractiveGlobe />
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 border border-zinc-200/80 dark:border-white/[0.08] relative z-20 bg-background/95 dark:bg-black/60 backdrop-blur-md rounded-2xl shadow-md">
-                <div>
-                    <span className="block text-[8px] font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-0.5">CPU CORE LOAD</span>
-                    <span className="text-xs font-bold text-zinc-900 dark:text-white font-mono">{cpu}%</span>
+                <div className="flex flex-col gap-0.5">
+                    <span className="block text-[8px] font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">CPU CORE LOAD</span>
+                    <span className="text-xs font-bold text-zinc-900 dark:text-white font-mono flex items-center h-4">{cpu}%</span>
                 </div>
-                <div>
-                    <span className="block text-[8px] font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-0.5">MEMORY BLOCK</span>
-                    <span className="text-xs font-bold text-zinc-900 dark:text-white font-mono">{ram} GB</span>
+                <div className="flex flex-col gap-0.5">
+                    <span className="block text-[8px] font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">MEMORY BLOCK</span>
+                    <span className="text-xs font-bold text-zinc-900 dark:text-white font-mono flex items-center h-4">{ram} GB</span>
                 </div>
-                <div>
-                    <span className="block text-[8px] font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-0.5">HEALTH CHECKS</span>
-                    <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 font-mono flex items-center gap-1">
-                        <span className="w-1 h-1 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse"></span> 100% OK
+                <div className="flex flex-col gap-0.5">
+                    <span className="block text-[8px] font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">HEALTH CHECKS</span>
+                    <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 font-mono flex items-center gap-1.5 h-4">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse shrink-0"></span>
+                        <span>100% OK</span>
                     </span>
                 </div>
-                <div>
-                    <span className="block text-[8px] font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-0.5">NODE UPTIME</span>
-                    <span className="text-xs font-bold text-zinc-700 dark:text-zinc-300 font-mono">
+                <div className="flex flex-col gap-0.5">
+                    <span className="block text-[8px] font-mono text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">NODE UPTIME</span>
+                    <span className="text-xs font-bold text-zinc-700 dark:text-zinc-300 font-mono flex items-center h-4">
                         {uptime.days}d {uptime.hours}h {uptime.minutes}m
                     </span>
                 </div>
@@ -1004,24 +1005,24 @@ export default function Hero({ profile }: { profile: Profile; skills?: Skill[]; 
     ];
 
     return (
-        <section id="hero-section" className="relative min-h-screen bg-background text-foreground pt-12 pb-24 flex flex-col justify-start transition-colors duration-300">
+        <section id="hero-section" className="relative min-h-screen bg-background text-foreground pt-0 pb-24 flex flex-col justify-start transition-colors duration-300">
             
             {/* 1. Header Navigation Bar */}
             <div className="w-full border-b border-border bg-background/80 backdrop-blur-md sticky top-0 z-50 transition-colors duration-300">
-                <div className="max-w-[98%] 2xl:max-w-[1800px] mx-auto px-6 py-4 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
+                <div className="max-w-[98%] 2xl:max-w-[1800px] mx-auto px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between">
+                    <div className="flex items-center gap-2 sm:gap-3">
                         <Image 
                             src="/logo.jpeg" 
                             alt="Pasindu Jayasinghe Logo" 
-                            width={32}
-                            height={32}
-                            className="w-8 h-8 rounded-full border border-border object-cover shadow-sm select-none pointer-events-none" 
+                            width={44}
+                            height={44}
+                            className="w-9 h-9 sm:w-11 sm:h-11 rounded-full border border-border object-cover shadow-sm select-none pointer-events-none" 
                         />
-                        <span className="font-sans font-bold text-zinc-900 dark:text-white text-base tracking-tight select-none">
+                        <span className="font-sans font-bold text-zinc-900 dark:text-white text-xs xs:text-sm sm:text-base md:text-lg tracking-tight select-none whitespace-nowrap">
                             Pasindu Jayasinghe
                         </span>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-1.5 sm:gap-3">
                         <a 
                             href={profile.github}
                             target="_blank"
@@ -1035,7 +1036,7 @@ export default function Hero({ profile }: { profile: Profile; skills?: Skill[]; 
                             href={profile.bookCallUrl || "#"}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-xs text-background bg-foreground hover:bg-foreground/90 font-semibold px-4 py-2 rounded-lg transition-colors mr-1"
+                            className="whitespace-nowrap text-[10px] xs:text-xs text-background bg-foreground hover:bg-foreground/90 font-semibold px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-lg transition-colors mr-0.5"
                         >
                             Book Call
                         </a>

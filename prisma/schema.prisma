@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "./client"
   binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
@@ -64,4 +65,20 @@ model Project {
   
   portfolioId     String
   portfolio       PortfolioData @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+}
+
+model BlockedIp {
+  id        String    @id @default(uuid())
+  ip        String    @unique
+  reason    String
+  blockedAt DateTime  @default(now())
+  expiresAt DateTime?
+}
+
+model LoginAttempt {
+  id        String   @id @default(uuid())
+  ip        String
+  username  String
+  success   Boolean
+  timestamp DateTime @default(now())
 }

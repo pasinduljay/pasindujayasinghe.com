@@ -83,12 +83,18 @@ export default function Workflow() {
                                 </div>
 
                                 {!isLast && (
-                                    <div className="h-40 w-full relative z-10 pointer-events-none">
-                                        <PipelineConnector
-                                            fromSide={isRight ? "right" : "left"}
-                                            toSide={nextIsRight ? "right" : "left"}
-                                            index={index}
-                                        />
+                                    <div className="h-12 md:h-40 w-full relative z-10 pointer-events-none flex items-center justify-center">
+                                        {/* Simple vertical connection line for mobile */}
+                                        <div className="w-[1px] h-full bg-zinc-200 dark:bg-zinc-800 md:hidden" />
+                                        
+                                        {/* Desktop pipeline curves */}
+                                        <div className="hidden md:block w-full h-full">
+                                            <PipelineConnector
+                                                fromSide={isRight ? "right" : "left"}
+                                                toSide={nextIsRight ? "right" : "left"}
+                                                index={index}
+                                            />
+                                        </div>
                                     </div>
                                 )}
                             </div>

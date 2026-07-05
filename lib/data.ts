@@ -1,10 +1,12 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@/prisma/client";
 import portfolioData from "../data/portfolio.json";
 
 // Use a global prisma client in development to prevent too many connections
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
-const prisma = globalForPrisma.prisma || new PrismaClient();
+const prisma = (globalForPrisma.prisma && "blockedIp" in globalForPrisma.prisma)
+    ? globalForPrisma.prisma
+    : new PrismaClient();
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
 export interface Skill {
