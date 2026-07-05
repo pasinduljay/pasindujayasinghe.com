@@ -142,9 +142,6 @@ export default function Preloader({ isBlocked = false, blockReason = "" }: { isB
         };
     }, [isBlocked]);
 
-    useEffect(() => {
-        setMounted(true);
-    }, []);
 
     if (complete) return null;
 
